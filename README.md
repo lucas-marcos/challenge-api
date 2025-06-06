@@ -7,6 +7,7 @@ Considere o microserviço ServiceA que seja responsável por registrar tudo que 
 Considere agora um outro microserviço, chamado ServiceControl, que seja responsável por receber esses registros, processar adicionando a informação das condições climáticas no dia em que a obra está sendo executada, persistir as informações, e repassar essa informação para um outro microserviço ServiceB.
 
 Desenho da arquitetura
+
 ![image](https://github.com/user-attachments/assets/5ab45012-8605-4421-ae34-924c6d379f9d)
 
 Para o teste implemente somente o ServiceControl e como ele se comunica com os outros microserviços. Não é necessário implementar o ServiceA e ServiceB.
