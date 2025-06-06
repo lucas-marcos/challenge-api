@@ -3,21 +3,39 @@ A construtora Caiapó é uma das maiores construtoras de infraestrutura do Brasi
 Visando processos cada vez mais maduros, eficientes, e com sistemas robustos que ofereçam cada vez mais suporte ao modelo de negócio, desde 2019 a Caiapó vem investindo no desenvolvimento de suas próprias soluções de software.
 
 # O Desafio
-Crie um microsserviço capaz de aceitar solicitações RESTful que recebam como parâmetro o nome da cidade ou as coordenadas (*latitude e longitude*) e retorne as 5 tops músicas (*apenas os nomes das músicas*) de um determinado artista de acordo com a temperatura atual.
+Considere o microserviço ServiceA que seja responsável por registrar tudo que é feito na obra para a construção de uma rodovia. Ex.: Serviço de Pavimentação, Serviço de Tapa Buraco, Serviço de Confecção de Meio Fio, etc.
+Considere agora um outro microserviço, chamado ServiceControl, que seja responsável por receber esses registros, processar adicionando a informação das condições climáticas no dia em que a obra está sendo executada, persistir as informações, e repassar essa informação para um outro microserviço ServiceB.
+
+Desenho da arquitetura
+![image](https://github.com/user-attachments/assets/5ab45012-8605-4421-ae34-924c6d379f9d)
+
+Para o teste implemente somente o ServiceControl e como ele se comunica com os outros microserviços. Não é necessário implementar o ServiceA e ServiceB.
 
 ## Requisitos
-1) Se a temperatura(*celsius*) estiver acima de 30 graus, entregue as 5 top músicas do David Guetta;
-2) Caso a temperatura esteja entre 15 e 30 graus, entregue as 5 top músicas da Madonna;
-3) Se estiver um pouco frio (entre 10 e 14 graus), entregue as 5 top de Os Paralamas do Sucesso;
-4) Caso contrário, se estiver frio lá fora, entregue as 5 top músicas de Ludwig van Beethoven.
+1) Obtenha a temperatura(*celsius*) na cidade em que a obra está sendo executada, e na hora em que o ServiceControl recebeu esse registro;
+2) O ServiceControl irá registrar, além dos dados recebidos pelo ServiceA, a temperatura da cidade e a condição climática;
+3) Caso a temperatura esteja entre 15 e 30 graus, sinalize no registro que o clima estava em "ótimas condições";
+4) Se estiver um pouco frio (entre 10 e 14 graus), sinalize no registro que o clima estava "agradável";
+5) Caso contrário, se estiver frio lá fora, sinalize no registro que o clima estava "impraticável", ou seja, sem condições de se executar a obra no dia;
+6) Considere um volume de 50 a 100 mil registros diários.
+
+Considere que o ServiceA entregará os dados na seguinte estrutura:
+```
+{
+    "Id": "", //identificação do registro
+    "ServicoExecutado": "", //descrição do serviço que foi executado na obra
+    "Data": "", //data em que o serviço foi executado
+    "Responsavel": "", //nome da pessoa responsável pela execução do serviço
+}
+```
 
 ## Requisitos não funcionais
 - O microsserviço deve estar preparado para ser tolerante a falhas, responsivo e resiliente;
 - Utilize a linguagem C# .NET. Use qualquer ferramenta e estrutura com as quais se sinta confortável e elabore brevemente sua solução, detalhes de arquitetura, escolha de padrões e estruturas;
-- Crie uma imagem docker do seu microsserviço e publique em algum hub a sua escolha (exemplo: dockerhub) e informe o comando para que seu serviço possa ser implantado localmente.
+- Crie uma imagem docker do seu microsserviço e publique em algum hub a sua escolha (exemplo: dockerhub) e informe o comando para que seu serviço possa ser implantado localmente. Considere que os recursos de infra utilizados também precisam subir (banco de dados, etc).
 
 ## Dicas
-Você pode usar a API do *[OpenWeatherMaps](https://openweathermap.org)* para buscar dados de temperatura e o *[Spotify](https://developer.spotify.com/)* para sugerir as músicas da playlist.
+Você pode usar a API do *[OpenWeatherMaps](https://openweathermap.org)* para buscar dados de temperatura.
 
 A interpretação dos requisitos e o fornecimento da melhor solução são fundamentais para atender bem aos clientes desse microsserviço. Dê o seu melhor! :)
 
