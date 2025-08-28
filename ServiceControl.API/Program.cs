@@ -28,10 +28,10 @@ builder.Services.AddDbContext<ServiceControlDbContext>(options =>
 builder.Services.AddMemoryCache();
 builder.Services.AddHttpClient();
 
-builder.Services.AddScoped<IServiceExecutionRepository, ServiceExecutionRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 builder.Services.AddScoped<IServiceBClient, ServiceBClient>();
-builder.Services.AddScoped<IProcessServiceExecutionUseCase, ProcessServiceExecutionUseCase>();
+builder.Services.AddScoped<IProcessOrderUseCase, ProcessOrderUseCase>();
 
 var app = builder.Build();
 

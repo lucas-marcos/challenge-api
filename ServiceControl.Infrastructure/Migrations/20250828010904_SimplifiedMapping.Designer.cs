@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceControl.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using ServiceControl.Infrastructure.Data;
 namespace ServiceControl.Infrastructure.Migrations
 {
     [DbContext(typeof(ServiceControlDbContext))]
-    partial class ServiceControlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250828010904_SimplifiedMapping")]
+    partial class SimplifiedMapping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace ServiceControl.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ServiceControl.Domain.Entities.Order", b =>
+            modelBuilder.Entity("ServiceControl.Domain.Entities.ServiceExecution", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(50)
@@ -33,25 +36,25 @@ namespace ServiceControl.Infrastructure.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("CreatedAt");
 
-                    b.Property<DateTime>("ExecutionDate")
+                    b.Property<DateTime>("Data")
                         .HasColumnType("datetime2")
-                        .HasColumnName("ExecutionDate");
-
-                    b.Property<string>("OrderDescription")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)")
-                        .HasColumnName("OrderDescription");
+                        .HasColumnName("Data");
 
                     b.Property<DateTime>("ProcessedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("ProcessedAt");
 
-                    b.Property<string>("ResponsiblePerson")
+                    b.Property<string>("Responsavel")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
-                        .HasColumnName("ResponsiblePerson");
+                        .HasColumnName("Responsavel");
+
+                    b.Property<string>("ServicoExecutado")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
+                        .HasColumnName("ServicoExecutado");
 
                     b.Property<decimal>("Temperature")
                         .HasPrecision(5, 2)
@@ -66,11 +69,11 @@ namespace ServiceControl.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExecutionDate");
+                    b.HasIndex("Data");
 
                     b.HasIndex("ProcessedAt");
 
-                    b.ToTable("Orders");
+                    b.ToTable("ServiceExecutions");
                 });
 #pragma warning restore 612, 618
         }

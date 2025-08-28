@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceControl.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using ServiceControl.Infrastructure.Data;
 namespace ServiceControl.Infrastructure.Migrations
 {
     [DbContext(typeof(ServiceControlDbContext))]
-    partial class ServiceControlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250828013911_OrderEntityMapping")]
+    partial class OrderEntityMapping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

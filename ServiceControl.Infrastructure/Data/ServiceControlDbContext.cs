@@ -11,34 +11,34 @@ public class ServiceControlDbContext : DbContext
     {
     }
 
-    public DbSet<ServiceExecution> ServiceExecutions { get; set; }
+    public DbSet<Order> Orders { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<ServiceExecution>(entity =>
+        modelBuilder.Entity<Order>(entity =>
         {
             entity.HasKey(e => e.Id);
             
             entity.Property(e => e.Id)
                 .HasConversion(
                     id => id.Value,
-                    value => ServiceExecutionId.Create(value))
+                    value => OrderId.Create(value))
                 .HasColumnName("Id")
                 .HasMaxLength(50);
 
-            entity.Property(e => e.ServicoExecutado)
+            entity.Property(e => e.OrderDescription)
                 .HasConversion(
                     desc => desc.Value,
-                    value => ServiceDescription.Create(value))
-                .HasColumnName("ServicoExecutado")
+                    value => OrderDescription.Create(value))
+                .HasColumnName("OrderDescription")
                 .HasMaxLength(500)
                 .IsRequired();
 
-            entity.Property(e => e.Responsavel)
+            entity.Property(e => e.ResponsiblePerson)
                 .HasConversion(
                     resp => resp.Value,
                     value => ResponsiblePerson.Create(value))
-                .HasColumnName("Responsavel")
+                .HasColumnName("ResponsiblePerson")
                 .HasMaxLength(200)
                 .IsRequired();
 
@@ -57,11 +57,11 @@ public class ServiceControlDbContext : DbContext
                 .HasColumnName("Temperature")
                 .HasPrecision(5, 2);
 
-            entity.Property(e => e.Data)
+            entity.Property(e => e.ExecutionDate)
                 .HasConversion(
                     data => data.Value,
                     value => ExecutionDate.Create(value))
-                .HasColumnName("Data");
+                .HasColumnName("ExecutionDate");
 
             entity.Property(e => e.ProcessedAt)
                 .HasConversion(
@@ -75,7 +75,7 @@ public class ServiceControlDbContext : DbContext
                     value => CreatedDate.Create(value))
                 .HasColumnName("CreatedAt");
             
-            entity.HasIndex(e => e.Data);
+            entity.HasIndex(e => e.ExecutionDate);
             entity.HasIndex(e => e.ProcessedAt);
         });
     }

@@ -1,0 +1,81 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace ServiceControl.Infrastructure.Migrations
+{
+    /// <inheritdoc />
+    public partial class OrderEntityMapping : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "ServiceExecutions");
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    OrderDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    ExecutionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ResponsiblePerson = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Temperature = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
+                    WeatherCondition = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ProcessedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_ExecutionDate",
+                table: "Orders",
+                column: "ExecutionDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_ProcessedAt",
+                table: "Orders",
+                column: "ProcessedAt");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "Orders");
+
+            migrationBuilder.CreateTable(
+                name: "ServiceExecutions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Data = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProcessedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Responsavel = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    ServicoExecutado = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Temperature = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
+                    WeatherCondition = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServiceExecutions", x => x.Id);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServiceExecutions_Data",
+                table: "ServiceExecutions",
+                column: "Data");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServiceExecutions_ProcessedAt",
+                table: "ServiceExecutions",
+                column: "ProcessedAt");
+        }
+    }
+}

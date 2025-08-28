@@ -19,19 +19,19 @@ public class ServiceBClient : IServiceBClient
         _serviceBUrl = _configuration["ServiceB:BaseUrl"] ?? "http://localhost:5002/api/serviceb";
     }
 
-    public async Task<bool> SendProcessedExecutionAsync(ServiceExecution processedExecution)
+    public async Task<bool> SendProcessedOrderAsync(Order processedOrder)
     {
         try
         {
             var dto = new
             {
-                Id = processedExecution.Id.Value,
-                ServicoExecutado = processedExecution.ServicoExecutado.Value,
-                Data = processedExecution.Data.Value,
-                Responsavel = processedExecution.Responsavel.Value,
-                Temperature = processedExecution.Temperature.Value,
-                WeatherCondition = processedExecution.WeatherCondition.Value,
-                ProcessedAt = processedExecution.ProcessedAt.Value
+                Id = processedOrder.Id.Value,
+                OrderDescription = processedOrder.OrderDescription.Value,
+                ExecutionDate = processedOrder.ExecutionDate.Value,
+                ResponsiblePerson = processedOrder.ResponsiblePerson.Value,
+                Temperature = processedOrder.Temperature.Value,
+                WeatherCondition = processedOrder.WeatherCondition.Value,
+                ProcessedAt = processedOrder.ProcessedAt.Value
             };
 
             var json = JsonSerializer.Serialize(dto);
