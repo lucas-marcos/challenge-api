@@ -1,4 +1,5 @@
-using System.Text.Json;
+using System.Net;
+using Newtonsoft.Json;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using ServiceControl.Domain.Interfaces;
@@ -39,22 +40,24 @@ public class WeatherService : IWeatherService
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                var weatherData = JsonSerializer.Deserialize<WeatherApiResponse>(content);
+                var weatherData = JsonConvert.DeserializeObject<WeatherApiResponse>(content);
                 
-                if (weatherData?.Main?.Temp != 0)
+                if (weatherData?.Main?.Temp != null)
                 {
-                    var main = weatherData.Main;
-                    if (main != null)
-                    {
-                        var temperature = main.Temp;
-                        _cache.Set(cacheKey, temperature, TimeSpan.FromMinutes(30));
-                        return temperature;
-                    }
+                    var temperature = weatherData.Main.Temp;
+                    _cache.Set(cacheKey, temperature, TimeSpan.FromMinutes(30));
+                    return temperature;
                 }
             }
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new Exception("Cidade não encontrada.");
+            }
         }
-        catch
+        catch (Exception ex)
         {
+            Console.WriteLine($"Erro ao obter temperatura: {ex.Message}");
         }
 
         return 20.0m;
@@ -62,11 +65,65 @@ public class WeatherService : IWeatherService
 
     private class WeatherApiResponse
     {
+        public Coord? Coord { get; set; }
+        public List<Weather>? Weather { get; set; }
+        public string? Base { get; set; }
         public Main? Main { get; set; }
+        public int Visibility { get; set; }
+        public Wind? Wind { get; set; }
+        public Clouds? Clouds { get; set; }
+        public long Dt { get; set; }
+        public Sys? Sys { get; set; }
+        public int Timezone { get; set; }
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public int Cod { get; set; }
+    }
+
+    private class Coord
+    {
+        public decimal Lon { get; set; }
+        public decimal Lat { get; set; }
+    }
+
+    private class Weather
+    {
+        public int Id { get; set; }
+        public string? Main { get; set; }
+        public string? Description { get; set; }
+        public string? Icon { get; set; }
     }
 
     private class Main
     {
         public decimal Temp { get; set; }
+        public decimal FeelsLike { get; set; }
+        public decimal TempMin { get; set; }
+        public decimal TempMax { get; set; }
+        public int Pressure { get; set; }
+        public int Humidity { get; set; }
+        public int SeaLevel { get; set; }
+        public int GrndLevel { get; set; }
+    }
+
+    private class Wind
+    {
+        public decimal Speed { get; set; }
+        public int Deg { get; set; }
+        public decimal Gust { get; set; }
+    }
+
+    private class Clouds
+    {
+        public int All { get; set; }
+    }
+
+    private class Sys
+    {
+        public int Type { get; set; }
+        public int Id { get; set; }
+        public string? Country { get; set; }
+        public long Sunrise { get; set; }
+        public long Sunset { get; set; }
     }
 }

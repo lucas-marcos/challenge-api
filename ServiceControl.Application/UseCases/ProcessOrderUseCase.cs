@@ -47,16 +47,7 @@ public class ProcessOrderUseCase : IProcessOrderUseCase
             ProcessedAt = DateTime.UtcNow
         };
 
-        _ = Task.Run(async () =>
-        {
-            try
-            {
-                await _serviceBClient.SendProcessedOrderAsync(entity);
-            }
-            catch
-            {
-            }
-        });
+        await _serviceBClient.SendProcessedOrderAsync(entity);
 
         return processedOrder;
     }
