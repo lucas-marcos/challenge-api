@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceControl.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceControl.API", "ServiceControl.API\ServiceControl.API.csproj", "{EFCD918C-7334-44CA-9E4F-60345E0232B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceControl.Tests", "ServiceControl.Tests\ServiceControl.Tests.csproj", "{238DD19E-8CDD-48D9-9A9E-ABAE379B7381}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{EFCD918C-7334-44CA-9E4F-60345E0232B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFCD918C-7334-44CA-9E4F-60345E0232B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFCD918C-7334-44CA-9E4F-60345E0232B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{238DD19E-8CDD-48D9-9A9E-ABAE379B7381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{238DD19E-8CDD-48D9-9A9E-ABAE379B7381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{238DD19E-8CDD-48D9-9A9E-ABAE379B7381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{238DD19E-8CDD-48D9-9A9E-ABAE379B7381}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
