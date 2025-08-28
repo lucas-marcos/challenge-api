@@ -16,18 +16,25 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ProcessedOrderDto>> ProcessOrder(
-        [FromBody] OrderDto order,
-        [FromQuery] string city = "São Paulo")
+    public async Task<IActionResult> ProcessOrder([FromBody] OrderDto order, [FromQuery] string city)
     {
-        try
+        var result = await _processOrderUseCase.ExecuteAsync(order, city);
+
+        if (!result.Success)
         {
-            var result = await _processOrderUseCase.ExecuteAsync(order, city);
-            return Ok(result);
+            return BadRequest(new
+            {
+                Success = false,
+                Notifications = result.Notifications,
+                Message = "Erro no processamento do pedido"
+            });
         }
-        catch (Exception ex)
+
+        return Ok(new
         {
-            return StatusCode(500, new { error = "Internal server error", message = ex.Message });
-        }
+            Success = true,
+            ProcessedOrder = result.ProcessedOrder,
+            Notifications = result.Notifications
+        });
     }
 }

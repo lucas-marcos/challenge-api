@@ -31,6 +31,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 builder.Services.AddScoped<IServiceBClient, ServiceBClient>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IProcessOrderUseCase, ProcessOrderUseCase>();
 
 var app = builder.Build();

@@ -4,5 +4,5 @@ namespace ServiceControl.Application.Interfaces;
 
 public interface IProcessOrderUseCase
 {
-    Task<ProcessedOrderDto> ExecuteAsync(OrderDto order, string city);
+    Task<ProcessOrderResult> ExecuteAsync(OrderDto order, string city);
 }

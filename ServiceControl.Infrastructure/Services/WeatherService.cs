@@ -11,14 +11,20 @@ public class WeatherService : IWeatherService
     private readonly HttpClient _httpClient;
     private readonly IMemoryCache _cache;
     private readonly IConfiguration _configuration;
+    private readonly INotificationService _notificationService;
     private readonly string _apiKey;
     private readonly string _baseUrl;
 
-    public WeatherService(HttpClient httpClient, IMemoryCache cache, IConfiguration configuration)
+    public WeatherService(
+        HttpClient httpClient, 
+        IMemoryCache cache, 
+        IConfiguration configuration,
+        INotificationService notificationService)
     {
         _httpClient = httpClient;
         _cache = cache;
         _configuration = configuration;
+        _notificationService = notificationService;
         _apiKey = _configuration["OpenWeatherMap:ApiKey"] ?? string.Empty;
         _baseUrl = "https://api.openweathermap.org/data/2.5/weather";
     }
@@ -52,15 +58,19 @@ public class WeatherService : IWeatherService
 
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
-                throw new Exception("Cidade não encontrada.");
+                _notificationService.AddNotification("Cidade não encontrada.", "Warning");
+                return default;
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Erro ao obter temperatura: {ex.Message}");
+            _notificationService.AddNotification($"Erro ao obter temperatura: {ex.Message}", "Error");
+            return default;
         }
 
-        return 20.0m;
+        _notificationService.AddNotification("Não foi possível realizar a operação", "Warning");;
+        
+        return default;
     }
 
     private class WeatherApiResponse

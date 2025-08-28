@@ -10,21 +10,35 @@ public class ProcessOrderUseCase : IProcessOrderUseCase
     private readonly IWeatherService _weatherService;
     private readonly IOrderRepository _repository;
     private readonly IServiceBClient _serviceBClient;
+    private readonly INotificationService _notificationService;
 
     public ProcessOrderUseCase(
         IWeatherService weatherService,
         IOrderRepository repository,
-        IServiceBClient serviceBClient)
+        IServiceBClient serviceBClient,
+        INotificationService notificationService)
     {
         _weatherService = weatherService;
         _repository = repository;
         _serviceBClient = serviceBClient;
+        _notificationService = notificationService;
     }
 
-    public async Task<ProcessedOrderDto> ExecuteAsync(OrderDto order, string city)
+    public async Task<ProcessOrderResult> ExecuteAsync(OrderDto order, string city)
     {
         var temperature = await _weatherService.GetTemperatureAsync(city);
         var weatherCondition = GetWeatherConditionFromTemperature(temperature);
+
+        if (_notificationService.HasNotifications())
+        {
+            var notifications = _notificationService.GetNotifications();
+            return new ProcessOrderResult
+            {
+                Success = false,
+                Notifications = notifications,
+                ProcessedOrder = null
+            };
+        }
 
         var entity = Order.Create(
             order.OrderDescription,
@@ -47,9 +61,16 @@ public class ProcessOrderUseCase : IProcessOrderUseCase
             ProcessedAt = DateTime.UtcNow
         };
 
+
         await _serviceBClient.SendProcessedOrderAsync(entity);
 
-        return processedOrder;
+
+        return new ProcessOrderResult
+        {
+            Success = true,
+            Notifications = new List<Notification>(),
+            ProcessedOrder = processedOrder
+        };
     }
 
     private static string GetWeatherConditionFromTemperature(decimal temperature)
