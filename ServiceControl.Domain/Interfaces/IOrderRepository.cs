@@ -5,7 +5,7 @@ namespace ServiceControl.Domain.Interfaces;
 public interface IOrderRepository
 {
     Task<Order> AddAsync(Order order);
-    Task<Order?> GetByIdAsync(string id);
+    Task<Order?> GetByIdAsync(int id);
     Task<IEnumerable<Order>> GetAllAsync();
-    Task<bool> ExistsAsync(string id);
+    Task<bool> ExistsAsync(int id);
 }

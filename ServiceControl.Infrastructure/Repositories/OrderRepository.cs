@@ -21,7 +21,7 @@ public class OrderRepository : IOrderRepository
         return order;
     }
 
-    public async Task<Order?> GetByIdAsync(string id)
+    public async Task<Order?> GetByIdAsync(int id)
     {
         return await _context.Orders.FindAsync(id);
     }
@@ -31,8 +31,8 @@ public class OrderRepository : IOrderRepository
         return await _context.Orders.ToListAsync();
     }
 
-    public async Task<bool> ExistsAsync(string id)
+    public async Task<bool> ExistsAsync(int id)
     {
-        return await _context.Orders.AnyAsync(e => e.Id.Value == id);
+        return await _context.Orders.AnyAsync(e => e.Id == id);
     }
 }

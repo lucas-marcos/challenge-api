@@ -25,13 +25,13 @@ public class ServiceBClient : IServiceBClient
         {
             var dto = new
             {
-                Id = processedOrder.Id.Value,
-                OrderDescription = processedOrder.OrderDescription.Value,
-                ExecutionDate = processedOrder.ExecutionDate.Value,
-                ResponsiblePerson = processedOrder.ResponsiblePerson.Value,
-                Temperature = processedOrder.Temperature.Value,
-                WeatherCondition = processedOrder.WeatherCondition.Value,
-                ProcessedAt = processedOrder.ProcessedAt.Value
+                Id = processedOrder.Id,
+                OrderDescription = processedOrder.OrderDescription,
+                ExecutionDate = processedOrder.ExecutionDate,
+                ResponsiblePerson = processedOrder.ResponsiblePerson,
+                Temperature = processedOrder.Temperature,
+                WeatherCondition = processedOrder.WeatherCondition,
+                ProcessedAt = processedOrder.ProcessedAt
             };
 
             var json = JsonSerializer.Serialize(dto);

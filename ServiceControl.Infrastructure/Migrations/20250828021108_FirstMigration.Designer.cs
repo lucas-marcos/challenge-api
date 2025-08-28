@@ -12,8 +12,8 @@ using ServiceControl.Infrastructure.Data;
 namespace ServiceControl.Infrastructure.Migrations
 {
     [DbContext(typeof(ServiceControlDbContext))]
-    [Migration("20250828014035_ChangeTableName")]
-    partial class ChangeTableName
+    [Migration("20250828021108_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,10 +27,12 @@ namespace ServiceControl.Infrastructure.Migrations
 
             modelBuilder.Entity("ServiceControl.Domain.Entities.Order", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
