@@ -3,7 +3,11 @@
 
 Para instalar e executar esta aplicação, consulte o **[MANUAL-INSTALACAO.md](MANUAL-INSTALACAO.md)** que contém instruções detalhadas de instalação via scripts automatizados ou comandos manuais.
 
+## 🌐 **Projeto Publicado**
 
+Esta aplicação está disponível e funcionando em: **[http://147.93.36.49:5000/swagger/index.html](http://147.93.36.49:5000/swagger/index.html)**
+
+**Swagger UI com tema dark** disponível para testar todas as funcionalidades da API.
 
 
 # Sobre a Caiapó
