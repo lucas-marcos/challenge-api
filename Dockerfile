@@ -1,12 +1,11 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copia os arquivos de projeto primeiro para otimizar o cache
+# Copia os arquivos de projeto
 COPY ["ServiceControl.API/ServiceControl.API.csproj", "ServiceControl.API/"]
 COPY ["ServiceControl.Application/ServiceControl.Application.csproj", "ServiceControl.Application/"]
 COPY ["ServiceControl.Domain/ServiceControl.Domain.csproj", "ServiceControl.Domain/"]
@@ -15,6 +14,7 @@ COPY ["ServiceControl.Infrastructure/ServiceControl.Infrastructure.csproj", "Ser
 # Restaura as dependências
 RUN dotnet restore "ServiceControl.API/ServiceControl.API.csproj"
 
+# Copia todo o código fonte
 COPY . .
 
 # Build da aplicação
