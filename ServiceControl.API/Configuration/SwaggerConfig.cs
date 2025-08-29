@@ -44,6 +44,8 @@ public static class SwaggerConfig
                 c.DocumentTitle = "ServiceControl API Documentation";
                 c.DefaultModelsExpandDepth(2);
                 c.DefaultModelExpandDepth(2);
+                
+                c.InjectStylesheet("/swagger-ui/SwaggerDark.css");
             });
         
         return app;
