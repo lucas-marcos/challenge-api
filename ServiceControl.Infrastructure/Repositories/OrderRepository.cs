@@ -35,4 +35,9 @@ public class OrderRepository : IOrderRepository
     {
         return await _context.Orders.AnyAsync(e => e.Id == id);
     }
+
+    public async Task<IEnumerable<Order>> Get()
+    {
+        return await _context.Orders.ToListAsync();
+    }
 }

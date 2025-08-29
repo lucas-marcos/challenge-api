@@ -8,4 +8,5 @@ public interface IOrderRepository
     Task<Order?> GetByIdAsync(int id);
     Task<IEnumerable<Order>> GetAllAsync();
     Task<bool> ExistsAsync(int id);
+    Task<IEnumerable<Order>> Get();
 }

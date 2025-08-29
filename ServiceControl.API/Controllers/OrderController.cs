@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceControl.Application.DTOs;
 using ServiceControl.Application.Interfaces;
+using ServiceControl.Application.Services;
+using ServiceControl.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace ServiceControl.API.Controllers;
@@ -15,10 +17,26 @@ namespace ServiceControl.API.Controllers;
 public class OrderController : ControllerBase
 {
     private readonly IProcessOrderService _processOrderService;
+    private readonly IGetOrderService _getOrderService;
 
-    public OrderController(IProcessOrderService processOrderService)
+    public OrderController(IProcessOrderService processOrderService, IGetOrderService getOrderService)
     {
         _processOrderService = processOrderService;
+        _getOrderService = getOrderService;
+    }
+
+    /// <summary>
+    /// Retorna todos os pedidos registrados
+    /// </summary>
+    /// <returns>Lista de todos os pedidos</returns>
+    /// <response code="200">Lista de pedidos retornada com sucesso</response>
+    /// <response code="500">Erro interno do servidor</response>
+    [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Order>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Get()
+    {
+        var orders = await _getOrderService.GetAllOrders();
+        return Ok(orders);
     }
 
     /// <summary>

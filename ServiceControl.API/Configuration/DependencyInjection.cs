@@ -22,6 +22,7 @@ public static class DependencyInjection
         
         // Services
         services.AddScoped<IProcessOrderService, ProcessOrderService>();
+        services.AddScoped<IGetOrderService, GetOrderService>();
         
         // Logging
         services.AddLogging(builder =>
