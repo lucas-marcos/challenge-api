@@ -5,10 +5,20 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["ServiceControl.API.csproj", "./"]
-RUN dotnet restore "ServiceControl.API.csproj"
+
+# Copia os arquivos de projeto primeiro para otimizar o cache
+COPY ["ServiceControl.API/ServiceControl.API.csproj", "ServiceControl.API/"]
+COPY ["ServiceControl.Application/ServiceControl.Application.csproj", "ServiceControl.Application/"]
+COPY ["ServiceControl.Domain/ServiceControl.Domain.csproj", "ServiceControl.Domain/"]
+COPY ["ServiceControl.Infrastructure/ServiceControl.Infrastructure.csproj", "ServiceControl.Infrastructure/"]
+
+# Restaura as dependências
+RUN dotnet restore "ServiceControl.API/ServiceControl.API.csproj"
+
 COPY . .
-WORKDIR "/src"
+
+# Build da aplicação
+WORKDIR "/src/ServiceControl.API"
 RUN dotnet build "ServiceControl.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

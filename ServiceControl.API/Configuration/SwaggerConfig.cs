@@ -35,8 +35,7 @@ public static class SwaggerConfig
 
     public static IApplicationBuilder UseSwaggerServices(this IApplicationBuilder app, IWebHostEnvironment environment)
     {
-        if (environment.IsDevelopment())
-        {
+       
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -46,7 +45,6 @@ public static class SwaggerConfig
                 c.DefaultModelsExpandDepth(2);
                 c.DefaultModelExpandDepth(2);
             });
-        }
         
         return app;
     }
