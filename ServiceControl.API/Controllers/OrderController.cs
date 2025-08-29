@@ -14,11 +14,11 @@ namespace ServiceControl.API.Controllers;
 [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 public class OrderController : ControllerBase
 {
-    private readonly IProcessOrderUseCase _processOrderUseCase;
+    private readonly IProcessOrderService _processOrderService;
 
-    public OrderController(IProcessOrderUseCase processOrderUseCase)
+    public OrderController(IProcessOrderService processOrderService)
     {
-        _processOrderUseCase = processOrderUseCase;
+        _processOrderService = processOrderService;
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ public class OrderController : ControllerBase
         [FromBody] OrderDto order, 
         [FromQuery] string city = "São Paulo")
     {
-        var result = await _processOrderUseCase.ExecuteAsync(order, city);
+        var result = await _processOrderService.ExecuteAsync(order, city);
 
         if (!result.Success)
         {

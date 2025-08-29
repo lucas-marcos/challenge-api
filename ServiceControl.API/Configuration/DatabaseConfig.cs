@@ -20,7 +20,6 @@ public static class DatabaseConfig
         using var scope = app.ApplicationServices.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<ServiceControlDbContext>();
         
-        // Garante que o banco de dados seja criado e migrado
         context.Database.Migrate();
         
         return app;

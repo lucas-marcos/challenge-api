@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ServiceControl.Application.Interfaces;
-using ServiceControl.Application.UseCases;
+using ServiceControl.Application.Services;
 using ServiceControl.Domain.Interfaces;
 using ServiceControl.Infrastructure.Repositories;
 using ServiceControl.Infrastructure.Services;
@@ -19,8 +20,16 @@ public static class DependencyInjection
         services.AddScoped<IServiceBClient, ServiceBClient>();
         services.AddScoped<INotificationService, NotificationService>();
         
-        // Use Cases
-        services.AddScoped<IProcessOrderUseCase, ProcessOrderUseCase>();
+        // Services
+        services.AddScoped<IProcessOrderService, ProcessOrderService>();
+        
+        // Logging
+        services.AddLogging(builder =>
+        {
+            builder.AddConsole();
+            builder.AddDebug();
+            builder.SetMinimumLevel(LogLevel.Information);
+        });
         
         return services;
     }

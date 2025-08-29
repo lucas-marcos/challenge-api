@@ -2,7 +2,7 @@ using ServiceControl.Application.DTOs;
 
 namespace ServiceControl.Application.Interfaces;
 
-public interface IProcessOrderUseCase
+public interface IProcessOrderService
 {
     Task<ProcessOrderResult> ExecuteAsync(OrderDto order, string city);
 }
