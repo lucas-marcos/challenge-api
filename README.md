@@ -1,3 +1,11 @@
+
+## 🚀 **Manual de Instalação**
+
+Para instalar e executar esta aplicação, consulte o **[MANUAL-INSTALACAO.md](MANUAL-INSTALACAO.md)** que contém instruções detalhadas de instalação via scripts automatizados ou comandos manuais.
+
+
+
+
 # Sobre a Caiapó
 A construtora Caiapó é uma das maiores construtoras de infraestrutura do Brasil com obras espalhadas em todo território nacional.
 Visando processos cada vez mais maduros, eficientes, e com sistemas robustos que ofereçam cada vez mais suporte ao modelo de negócio, desde 2019 a Caiapó vem investindo no desenvolvimento de suas próprias soluções de software.
